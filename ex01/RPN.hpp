@@ -12,6 +12,8 @@ class RPN {
         RPN& operator=(const RPN& other);
         ~RPN();
 
+        int polishCalc(const std::string& input);
     private:
+        void manageOperator(const char op);
         std::stack<int> _stack;
 };
