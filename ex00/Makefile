@@ -23,10 +23,10 @@ clean:
 	rm -f $(OBJS)
 
 run: all
-	./$(NAME) $(ARGS)
+	./$(NAME)
 
 run2: all
-	valgrind --show-leak-kinds=all --leak-check=full ./$(NAME) $(ARGS)
+	valgrind --show-leak-kinds=all --leak-check=full ./$(NAME)
 
 re: fclean all
 
