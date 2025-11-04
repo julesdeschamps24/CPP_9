@@ -36,7 +36,6 @@ static bool checkInput(const std::string& inp, long& nb) {
     int size = inp.size();
     if(size == 0)
         return (false);
-
     
     for (int i = 0; i < size; i++)
     {
@@ -71,4 +70,45 @@ void PmergeMe::parseInput(int ac, char**& input) {
     if(span == 0)
         throw std::invalid_argument("Error: duplicates numbers");
     _deq.assign(_vec.begin(), _vec.end());
+}
+
+void printTime(int nb_elem, const std::string& cont, double time) {
+    std::cout << "Time to process a range of " << nb_elem 
+        << " elements with std::" << cont << " : " 
+        << time << "us" << std::endl;
+}
+
+void printNumbers(std::vector<int>& vec, const std::string& when) {
+    std::cout << when << ":  ";
+    std::vector<int>::iterator it = vec.begin();
+    std::vector<int>::iterator end = vec.end();
+
+
+    while(it != end)
+    {
+        std::cout << *it << " ";
+        ++it;
+    }
+    std::cout << std::endl;
+}
+
+void PmergeMe::startFordJohnson() {
+    clock_t start;
+    clock_t end;
+    double duration;
+    int nb_elem = _vec.size();
+
+    printNumbers(_vec, "Before");
+    start = clock();
+    mergeInsertSort(_vec);
+    end = clock();
+    duration = static_cast<double>(end - start);
+    printNumbers(_vec, "After");
+    printTime(nb_elem, "vector", duration);
+
+    start = clock();
+    mergeInsertSort(_deq);
+    end = clock();
+    duration = static_cast<double>(end - start);
+    printTime(nb_elem, "deque", duration);
 }

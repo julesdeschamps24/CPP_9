@@ -10,6 +10,7 @@ int main(int ac, char **av)
     PmergeMe sort;
     try {
         sort.parseInput(ac, av);
+        sort.startFordJohnson();
     } catch (std::exception & e) {
         std::cerr << e.what() << std::endl;
     }
