@@ -26,7 +26,6 @@ int PmergeMe::shortestSpan() const {
     for (int i = 1; i < cont_size - 1; i++)
     {
         diff = sorted[i + 1] - sorted[i];
-        std::cout << diff << std::endl;
         if(diff < min_span)
             min_span = diff;
     }
@@ -57,7 +56,7 @@ void PmergeMe::parseInput(int ac, char**& input) {
     std::string str_nb; 
     long nb;
 
-    _vec.resize(ac - 1);
+    _vec.reserve(ac - 1);
 
     for (int i = 1; i < ac; i++)
     {
@@ -68,7 +67,8 @@ void PmergeMe::parseInput(int ac, char**& input) {
 
         _vec.push_back(static_cast<int>(nb));
     }
-    // int span = shortestSpan();
-    // if(span == 0)
-    //     throw std::invalid_argument("Error: duplicates numbers");
+    int span = shortestSpan();
+    if(span == 0)
+        throw std::invalid_argument("Error: duplicates numbers");
+    _deq.assign(_vec.begin(), _vec.end());
 }
