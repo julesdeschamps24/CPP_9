@@ -100,14 +100,14 @@ void PmergeMe::startFordJohnson() {
 
     printNumbers(_vec, "Before");
     start = clock();
-    mergeInsertSort(_vec);
+    fordJohnsonSort(_vec);
     end = clock();
     duration = static_cast<double>(end - start);
     printNumbers(_vec, "After");
     printTime(nb_elem, "vector", duration);
 
     start = clock();
-    mergeInsertSort(_deq);
+    fordJohnsonSort(_deq);
     end = clock();
     duration = static_cast<double>(end - start);
     printTime(nb_elem, "deque", duration);
