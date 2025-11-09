@@ -72,13 +72,13 @@ void PmergeMe::parseInput(int ac, char**& input) {
     _deq.assign(_vec.begin(), _vec.end());
 }
 
-void printTime(int nb_elem, const std::string& cont, double time) {
+static void printTime(int nb_elem, const std::string& cont, double time) {
     std::cout << "Time to process a range of " << nb_elem 
         << " elements with std::" << cont << " : " 
         << time << "us" << std::endl;
 }
 
-void printNumbers(std::vector<int>& vec, const std::string& when) {
+static void printNumbers(std::vector<int>& vec, const std::string& when) {
     std::cout << when << ":  ";
     std::vector<int>::iterator it = vec.begin();
     std::vector<int>::iterator end = vec.end();
@@ -102,13 +102,13 @@ void PmergeMe::startFordJohnson() {
     start = clock();
     fordJohnsonSort(_vec);
     end = clock();
-    duration = static_cast<double>(end - start);
+    duration = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000000.0;
     printNumbers(_vec, "After");
     printTime(nb_elem, "vector", duration);
 
     start = clock();
     fordJohnsonSort(_deq);
     end = clock();
-    duration = static_cast<double>(end - start);
+    duration = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000000.0;
     printTime(nb_elem, "deque", duration);
 }

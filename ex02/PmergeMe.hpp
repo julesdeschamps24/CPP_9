@@ -9,11 +9,6 @@
 #include <climits>
 #include <deque>
 
-#define RED   "\033[31m"
-#define GREEN "\033[32m"
-#define BLUE  "\033[34m"
-#define RESET "\033[0m"
-
 class PmergeMe
 {
     public:
@@ -24,15 +19,6 @@ class PmergeMe
 
         void parseInput(int ac, char**& input);
         void startFordJohnson();
-
-        template <typename Container>
-        void printContainer(const Container& c, const std::string& name, const char* color)
-        {
-            std::cout << color << name << " = [ ";
-            for (typename Container::const_iterator it = c.begin(); it != c.end(); ++it)
-            std::cout << *it << " ";
-            std::cout << "]" << RESET << std::endl;
-        }
 
         template <typename Container>
         void fordJohnsonSort(Container& c) 
@@ -60,23 +46,22 @@ class PmergeMe
         int shortestSpan() const;
 
         template <typename Container>
-        Container jacobsthalSeq(typename Container::size_type pend_size)
+        Container jacobsthalSeq(int pend_size)
         {
-        Container jac;
+            Container jac;
 
-        if (pend_size == 0)
-            return jac;
-
-        jac.push_back(1);
-        if (pend_size == 1)
+           if (pend_size == 0)
                 return jac;
 
-            jac.push_back(3);
+            jac.push_back(0);
+            if (pend_size == 1)
+                return jac;
+
+            jac.push_back(1);
             while (true) 
             {
-            typename Container::value_type next =
-                jac[jac.size() - 1] + 2 * jac[jac.size() - 2];
-                if (next > static_cast<typename Container::value_type>(pend_size))
+                int next = jac[jac.size() - 1] + 2 * jac[jac.size() - 2];
+                if (next > pend_size)
                     break;
                 jac.push_back(next);
             }
@@ -101,14 +86,6 @@ class PmergeMe
         }
 
         template <typename Container>
-        const typename Container::value_type &getNth(const Container &c, size_t n) 
-        {
-            typename Container::const_iterator it = c.begin();
-            std::advance(it, n);
-            return *it;
-        }
-
-        template <typename Container>
         void insertPend(Container& main, const Container& pend)
         {
                 if(pend.empty())
@@ -122,17 +99,18 @@ class PmergeMe
                         continue;
                     if (idx > pend.size())
                        idx = pend.size();
-
-                    for (size_t i = (k == 0 ? 1 : jac[k - 1] + 1); i <= idx; ++i) {
-                        const typename Container::value_type &val = getNth(pend, i - 1);
-                        binaryInsert(main, val);
-                    }
+                    
+                    size_t start;
+                    if(k == 0)
+                        start = 1;
+                    else
+                        start = jac[k - 1] + 1;
+                    for (size_t i = start; i <= idx; ++i)
+                        binaryInsert(main, pend[i - 1]);
                 }
 
-            for (size_t i = jac.back(); i < pend.size(); ++i) {
-                const typename Container::value_type &val = getNth(pend, i);
-                binaryInsert(main, val);
-            }
+            for (size_t i = jac.back(); i < pend.size(); ++i)
+                binaryInsert(main, pend[i]);
         }
 
         template <typename Container>
