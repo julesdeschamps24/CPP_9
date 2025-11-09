@@ -39,11 +39,39 @@ class PmergeMe
         }
 
     private:
-
         std::vector<int> _vec;
         std::deque<int> _deq;
 
         int shortestSpan() const;
+
+        template <typename Container>
+        void buildPairs(const Container& src, Container& main, Container& pend)
+        {
+            typename Container::const_iterator it = src.begin();
+            typename Container::const_iterator ite = src.end();
+            while(it != ite)
+            {
+                typename Container::const_iterator first = it;
+                ++it;
+                if(it != ite)
+                {
+                    typename Container::const_iterator second = it;
+                    ++it;
+                    if(*first > *second)
+                    {
+                        main.push_back(*first);
+                        pend.push_back(*second);
+                    }
+                    else
+                    {
+                        main.push_back(*second);
+                        pend.push_back(*first);
+                    }
+                }
+                else 
+                    main.push_back(*first);
+            }
+        }
 
         template <typename Container>
         Container jacobsthalSeq(int pend_size)
@@ -67,7 +95,6 @@ class PmergeMe
             }
             return jac;
         }
-
 
         template <typename Container>
         void binaryInsert(Container &c, const typename Container::value_type &val) 
@@ -111,34 +138,5 @@ class PmergeMe
 
             for (size_t i = jac.back(); i < pend.size(); ++i)
                 binaryInsert(main, pend[i]);
-        }
-
-        template <typename Container>
-        void buildPairs(const Container& src, Container& main, Container& pend)
-        {
-            typename Container::const_iterator it = src.begin();
-            typename Container::const_iterator ite = src.end();
-            while(it != ite)
-            {
-                typename Container::const_iterator first = it;
-                ++it;
-                if(it != ite)
-                {
-                    typename Container::const_iterator second = it;
-                    ++it;
-                    if(*first > *second)
-                    {
-                        main.push_back(*first);
-                        pend.push_back(*second);
-                    }
-                    else
-                    {
-                        main.push_back(*second);
-                        pend.push_back(*first);
-                    }
-                }
-                else 
-                    main.push_back(*first);
-            }
         }
 };
