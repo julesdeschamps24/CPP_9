@@ -72,7 +72,7 @@ static bool isValidDate(const std::string& date) {
     if(year % 4 == 0 && month == 2)
         days_by_month[1] = 29;
 
-    if(day < 1 || day >> days_by_month[month - 1])
+    if(day < 1 || day > days_by_month[month - 1])
         return (false);
     return(true);
 }

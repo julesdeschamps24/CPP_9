@@ -20,8 +20,8 @@ class BitcoinExchange
 
         void fillRates(const std::string& file);
         void manageInput(const std::string& input_file) const;
-    private:
 
+    private:
         double findRateForDate(const std::string& date) const;
         void parseLine(std::string& line) const;
         std::map<std::string, double> _rates;
