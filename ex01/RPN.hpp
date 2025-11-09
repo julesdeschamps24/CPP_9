@@ -13,6 +13,7 @@ class RPN {
         ~RPN();
 
         int polishCalc(const std::string& input);
+
     private:
         void manageOperator(const char op);
         std::stack<int> _stack;
