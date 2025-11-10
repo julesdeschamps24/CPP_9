@@ -121,18 +121,17 @@ class PmergeMe
             Container jac = jacobsthalSeq<Container>(pend.size());
             for (size_t j = 0; j < jac.size(); ++j) 
             {
-                size_t idx = jac[j];
-                if (idx == 0) 
+                if (jac[j] == 0) 
                     continue;
-                if (idx > pend.size())
-                   idx = pend.size();
+                if (jac[j] > static_cast<int>(pend.size()))
+                   jac[j] = pend.size();
                     
-                size_t start;
+                int start;
                 if(j == 0)
                     start = 1;
                 else
                     start = jac[j - 1] + 1;
-                for (size_t i = start; i <= idx; ++i)
+                for (int i = start; i <= jac[j]; ++i)
                     binaryInsert(main, pend[i - 1]);
             }
             for (size_t i = jac.back(); i < pend.size(); ++i)
