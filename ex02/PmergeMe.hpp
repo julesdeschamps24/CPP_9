@@ -97,7 +97,7 @@ class PmergeMe
         }
 
         template <typename Container>
-        void binaryInsert(Container &c, const typename Container::value_type &val) 
+        void binaryInsert(Container &c, int val) 
         {
             typename Container::iterator low = c.begin();
             typename Container::iterator high = c.end();
@@ -115,27 +115,26 @@ class PmergeMe
         template <typename Container>
         void insertPend(Container& main, const Container& pend)
         {
-                if(pend.empty())
-                    return;
+            if(pend.empty())
+                return;
 
-                Container jac = jacobsthalSeq<Container>(pend.size());
-                for (size_t k = 0; k < jac.size(); ++k) 
-                {
-                    size_t idx = jac[k];
-                    if (idx == 0) 
-                        continue;
-                    if (idx > pend.size())
-                       idx = pend.size();
+            Container jac = jacobsthalSeq<Container>(pend.size());
+            for (size_t j = 0; j < jac.size(); ++j) 
+            {
+                size_t idx = jac[j];
+                if (idx == 0) 
+                    continue;
+                if (idx > pend.size())
+                   idx = pend.size();
                     
-                    size_t start;
-                    if(k == 0)
-                        start = 1;
-                    else
-                        start = jac[k - 1] + 1;
-                    for (size_t i = start; i <= idx; ++i)
-                        binaryInsert(main, pend[i - 1]);
-                }
-
+                size_t start;
+                if(j == 0)
+                    start = 1;
+                else
+                    start = jac[j - 1] + 1;
+                for (size_t i = start; i <= idx; ++i)
+                    binaryInsert(main, pend[i - 1]);
+            }
             for (size_t i = jac.back(); i < pend.size(); ++i)
                 binaryInsert(main, pend[i]);
         }
