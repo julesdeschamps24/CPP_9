@@ -125,13 +125,13 @@ class PmergeMe
                     continue;
                 if (jac[j] > static_cast<int>(pend.size()))
                    jac[j] = pend.size();
-                    
+
                 int start;
                 if(j == 0)
                     start = 1;
                 else
                     start = jac[j - 1] + 1;
-                for (int i = start; i <= jac[j]; ++i)
+                for (int i = jac[j]; i >= start; --i)
                     binaryInsert(main, pend[i - 1]);
             }
             for (size_t i = jac.back(); i < pend.size(); ++i)
