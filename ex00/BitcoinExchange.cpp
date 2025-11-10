@@ -68,7 +68,7 @@ static bool isValidDate(const std::string& date) {
     if(year > 2025 || month < 1 || month > 12)
         return (false);
 
-    int days_by_month[] = {31, 28, 31, 30, 31, 30, 31, 31, 20, 31, 30, 31};
+    int days_by_month[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     if(year % 4 == 0 && month == 2)
         days_by_month[1] = 29;
 
